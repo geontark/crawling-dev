@@ -4,6 +4,8 @@ from src.consts.SmartStoreAuthConst import smartStoreAuthConst
 import src.utills.Utills as Utills
 
 # 스마트 스토어 상품 등록하기
+# 로그인후 상품 정보 자동등록 -> 상세페이지까지 입력후 완료됨
+
 # 사용법
 # driver = Utills.getChromeDriver(webDriverPath)
 # store = SmartStoreItemRegister(driver)
@@ -82,6 +84,7 @@ class SmartStoreItemRegister:
     def itemDetailInfo(self, itemDetailInfo):
         self.__itemDetailInfo = itemDetailInfo
 
+    #     스마트스토어 로그인 -> 상품 등록페이지로 이동 -> 상품 정보 및 아미지 등록 -> 배달 정보 입력 -> 아이템 상세 페이지 입력 -> 완료
     def excute(self):
         self.login()
         self.moveAddPage()

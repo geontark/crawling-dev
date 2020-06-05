@@ -1,8 +1,9 @@
 import telegram
 from src.consts.TelegramConst import telegramConst
 
+# 나의 텔레그램
 class MyTelegram:
-
+    # 내 텔레그램 봇에 메신저 보내기
     def telegramSend(message):
         token = telegramConst('token')
         chatId = telegramConst('chatId')
