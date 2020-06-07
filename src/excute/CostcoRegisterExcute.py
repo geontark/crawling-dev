@@ -2,12 +2,12 @@ from src.costco.CostcoItem import CostcoItem
 from src.smartstore.CostcoRegister import SmartStoreItemRegister
 from src.utills import Utills
 
-# 코스트코 아이템을 정보를 읽어와 스마트스토어에 작성하는 실행 로작
+# 코스트코 아이템을 정보를 읽어와 스마트스토어에 작성하는 실행 로직
 def excute():
     webDriverPath = '/Users/tak/tak/python/crawling-dev/chromedriver'
     driver = Utills.getChromeDriver(webDriverPath)
 
-    costcoPath = 'https://www.costco.co.kr/Appliances/Beauty-ToolsHealth-Care/SpasSaunas/Newgen-Knee-Bathtub/p/611837'
+    costcoPath = 'https://www.costco.co.kr/Appliances/Seasonal-Appliances/FansAir-circulator/EMK-Digital-Fan-35cm-EPF-S1440WB/p/609424'
     # 코스트코 정보 크롤링
     costcoItem = CostcoItem(driver, costcoPath).excute()
     costcoItem.quit()

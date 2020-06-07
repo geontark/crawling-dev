@@ -113,8 +113,13 @@ class CostcoItem:
     # 판매중인지 매진된 상태인지 체크
     def searchItemStockState(self):
         # 판매 상태 ("쇼핑카트에 담기", "품절" )
-        stockState = self.__driver.find_element_by_css_selector('#addToCartForm .btn').text
-        # temp = self.stockCheck(stockState)
+        try:
+            # 판매중
+            stockState = self.__driver.find_element_by_xpath('//*[@id="addToCartButton"]').text
+        except NoSuchElementException:
+            # 품절
+            stockState = self.__driver.find_element_by_xpath('//*[@id="addToCartForm"]/button').text
+        print(stockState)
         self.__itemStockState = stockState
 
     #     이미지 찾기 및 이미지 다운로드
