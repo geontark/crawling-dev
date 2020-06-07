@@ -7,3 +7,6 @@
 ./src/smartstore/costcoitemimg/*
 /src/smartstore/costcoitemimg/*
 .src/smartstore/costcoitemimg/*
+.src/smartstore/ikeaitemimg/*
+/src/smartstore/ikeaitemimg/*
+./src/smartstore/costcoitemimg/*

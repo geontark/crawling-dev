@@ -2,7 +2,6 @@ import time
 import urllib.request
 from bs4 import BeautifulSoup
 from selenium.common.exceptions import NoSuchElementException
-
 from src.utills import Utills
 
 # 코스트코의 상품 정보를 얻어옴
@@ -139,6 +138,7 @@ class CostcoItem:
                     i + 1) + ']/div/div/div/img').get_attribute('src')
             downloadPath = imgFolder + '/' + str(i) + '.jpg'
             urllib.request.urlretrieve(src, downloadPath)
+            Utills.imgResize(downloadPath, 1000, 1000) # 이미지 리사이징
             thumbNailPath.append(downloadPath)
 
         self.__itemImgs = thumbNailPath

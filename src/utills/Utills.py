@@ -2,6 +2,7 @@ import time
 from selenium import webdriver
 import pandas as pd
 import os
+from PIL import Image
 
 # chrome 브라우저 드라이버
 def getChromeDriver(path):
@@ -30,3 +31,10 @@ def movingTop(target):
     target.location_once_scrolled_into_view
     time.sleep(2)
     return target
+
+def imgResize(imgPath, width, height):
+    im = Image.open(imgPath)
+    # Thumbnail 이미지 생성
+    size = (width, height)
+    im.thumbnail(size)
+    im.save(imgPath)
