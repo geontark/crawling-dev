@@ -3,6 +3,7 @@ import urllib.request
 from bs4 import BeautifulSoup
 from selenium.common.exceptions import NoSuchElementException
 from src.utills import Utills
+from src.consts.AbsolutePathConst import getAbsolutePath
 
 class IkeaItem:
     # 웹 드라이버, 코스트코 상품 url
@@ -72,15 +73,11 @@ class IkeaItem:
     def excute(self):
         self.__driver.get(self.__ikeaPath)
         time.sleep(5)
-        # self.searchItemId()
-        # self.searchItemTitle()
-        # self.searchItemPrice()
-        # self.searchSaveImgs()
+        self.searchItemId()
+        self.searchItemTitle()
+        self.searchItemPrice()
+        self.searchSaveImgs()
         self.searchItemDetailInfo()
-        print(self.__itemId)
-        print(self.__itemTitle)
-        print(self.__itemPrice)
-        print(self.__itemId)
         return self
 
     def searchItemId(self):
@@ -88,6 +85,12 @@ class IkeaItem:
 
     def searchItemTitle(self):
         self.__itemTitle = self.__driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/div[2]/div[3]/div/div[1]/div/div[1]/h1/div[1]').text
+        subTitle = self.__driver.find_element_by_xpath(
+            '//*[@id="content"]/div/div[1]/div/div[2]/div[3]/div/div[1]/div/div[1]/h1/div[2]/span[1]').text
+        itemMesure = self.__driver.find_element_by_xpath(
+            '//*[@id="content"]/div/div[1]/div/div[2]/div[3]/div/div[1]/div/div[1]/h1/div[2]/span[2]').text
+        self.__itemTitle += ' ' + subTitle
+        self.__itemTitle += ' ' + itemMesure
 
     def searchItemPrice(self):
         try:  # 할인 하는지 체크
@@ -118,31 +121,29 @@ class IkeaItem:
                 thumbNailPath.append(downloadPath)
 
             self.__itemImgs = thumbNailPath
+
     def searchItemDetailInfo(self):
         Utills.movingTop(self.__driver.find_element_by_xpath('//*[@id="content"]/div/div/div/div[2]/div[2]/div[2]'))
 
         self.__driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/div[2]/div[2]/div[3]/div[1]/button').click()
         time.sleep(3)
-
-        #
-
         html = self.__driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
+        ikeaStylepath = getAbsolutePath('ikeaStyle')
+        ikeaStyle = Utills.fileStrRead(ikeaStylepath)
         itemDetailInfo = []
-        itemDetailInfo.append(soup.select('#range-modal-mount-node > div > div:nth-child(3) > div > div.range-revamp-modal__content')[0])
-        print(itemDetailInfo[0])
-        # itemDetailInfo.append(soup.select('#pdp-tabs > div')[1])
-        # self.__itemDetailInfo = itemDetailInfo
+        itemDetailInfo.append(str(ikeaStyle) + str(soup.select('#range-modal-mount-node > div > div:nth-child(3) > div > div.range-revamp-modal__content')[0]))
+        self.__itemDetailInfo = itemDetailInfo
 
     def quit(self):
         self.__driver.quit()
         return self
 
-def excute():
-    webDriverPath = '/Users/tak/tak/python/crawling-dev/chromedriver'
-    ikeaPath = 'https://www.ikea.com/kr/ko/p/bolmen-toilet-brush-holder-black-90165421/'
-    driver = Utills.getChromeDriver(webDriverPath)
-    ikeaItem = IkeaItem(driver,ikeaPath).excute()
-    time.sleep(1000)
+# def excute():
+#     webDriverPath = '/Users/tak/tak/python/crawling-dev/chromedriver'
+#     ikeaPath = 'https://www.ikea.com/kr/ko/p/bolmen-toilet-brush-holder-black-90165421/'
+#     driver = Utills.getChromeDriver(webDriverPath)
+#     ikeaItem = IkeaItem(driver,ikeaPath).excute()
+#     time.sleep(1000)
 
-excute()
+# excute()

@@ -38,3 +38,9 @@ def imgResize(imgPath, width, height):
     size = (width, height)
     im.thumbnail(size)
     im.save(imgPath)
+
+def fileStrRead(filePath):
+    f = open(filePath, 'r')
+    result = f.read()
+    f.close()
+    return result

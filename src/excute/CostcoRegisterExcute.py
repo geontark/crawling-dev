@@ -7,7 +7,7 @@ def excute():
     webDriverPath = '/Users/tak/tak/python/crawling-dev/chromedriver'
     driver = Utills.getChromeDriver(webDriverPath)
 
-    costcoPath = 'https://www.costco.co.kr/Food/Processed-Food/Instant-Food/Bonjuk-Rice-Abalone-Porridge-500g-x-3ea-x-4/p/624838'
+    costcoPath = 'https://www.costco.co.kr/Food/Processed-Food/Oils/KS-Spanish-Extra-Virgin-Olive-Oil-3L/p/1310209'
     # 코스트코 정보 크롤링
     costcoItem = CostcoItem(driver, costcoPath).excute()
     costcoItem.quit()

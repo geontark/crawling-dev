@@ -24,6 +24,7 @@ class SmartStoreItemRegister:
         self.__itemTitle = ''
         self.__itemPrice = ''
         self.__imgs = []
+        self.__deliveryPrice = 0
         self.__itemDetailInfo = []
         self.__priceMarginRate = ''
         self.__itemAvailableStock = 20
@@ -75,6 +76,14 @@ class SmartStoreItemRegister:
     @priceMarginRate.setter
     def priceMarginRate(self, rate):
         self.__priceMarginRate = rate
+
+    @property
+    def deliveryPrice(self):
+        return self.__deliveryPrice
+
+    @deliveryPrice.setter
+    def deliveryPrice(self, deliveryPrice):
+        self.__deliveryPrice = deliveryPrice
 
     @property
     def itemDetailInfo(self):
@@ -146,6 +155,17 @@ class SmartStoreItemRegister:
         Utills.movingTop(self.__driver.find_element_by_xpath(
             '//*[@id="productForm"]/ng-include/ui-view[16]/div[1]/div[2]/div/div[6]/div/div[1]/div[1]/div/label[2]')).click()  # 묶음 배송 -> 불가(개별계산)
 
+        if int(self.__deliveryPrice) != 0: # 배송비 설정
+            Utills.movingTop(self.__driver.find_element_by_xpath(
+                '//*[@id="productForm"]/ng-include/ui-view[16]/div[1]/div[2]/div/div[7]/div[1]/div/div/div/div/div')).click()
+            time.sleep(1)
+            # 유료 드랍박스 설정
+            Utills.movingTop(self.__driver.find_element_by_xpath(
+                '//*[@id="productForm"]/ng-include/ui-view[16]/div[1]/div[2]/div/div[7]/div[1]/div/div/div/div/div/div[2]/div/div[3]')).click()
+            # 배송료 입력
+            self.__driver.find_element_by_xpath(
+                '//*[@id="basic_price"]').send_keys(int(self.__deliveryPrice))
+
     #     마진 퍼센트를 붙인 가격을 계산하
     def calMarginPrice(self):
         price = int(self.itemPrice.replace('원', '').replace(',', ''))
@@ -167,13 +187,14 @@ class SmartStoreItemRegister:
 
     #     상품 상세 정보 입력
     def setItemDetailInfo(self):
-        self.__driver.find_element_by_css_selector('.seller-product-detail .content .btn-area button').send_keys(Keys.ENTER)
-        time.sleep(10)
-        windows = self.__driver.window_handles
-        self.__driver.switch_to.window(windows[1])
-        # 상품 상세정보1 입력
-        style1 = '<style> a{text-decoration:"none" !important;}</style>'   # a태그 밑줄 지움
-        self.writeDetailInfo(style1 + str(self.itemDetailInfo[0]))
+            # 상세정보2(스펙) 입력
+        if len(self.itemDetailInfo) > 0:
+            self.__driver.find_element_by_css_selector('.seller-product-detail .content .btn-area button').send_keys(Keys.ENTER)
+            time.sleep(10)
+            windows = self.__driver.window_handles
+            self.__driver.switch_to.window(windows[1])
+            # 상품 상세정보1 입력
+            self.writeDetailInfo(str(self.itemDetailInfo[0]))
 
         # 이미지 등록
         if len(self.itemImgs) != 0:
@@ -185,17 +206,18 @@ class SmartStoreItemRegister:
             self.__driver.find_element_by_css_selector("input[type='file']").send_keys(imgs)
 
         # 상세정보2(스펙) 입력
-        self.writeDetailInfo(style1 + str(self.itemDetailInfo[1]))
-        time.sleep(10)
-        # 상품상세 등록하기
-        self.__driver.find_element_by_css_selector('.header-editor button').send_keys(Keys.ENTER)
-        time.sleep(1)
-        self.__driver.switch_to.window(windows[0])
+        if len(self.itemDetailInfo) > 1:
+            self.writeDetailInfo(str(self.itemDetailInfo[1]))
+            time.sleep(10)
+            # 상품상세 등록하기
+            self.__driver.find_element_by_css_selector('.header-editor button').send_keys(Keys.ENTER)
+            time.sleep(1)
+            self.__driver.switch_to.window(windows[0])
 
     def writeDetailInfo(self, infoTag):
         self.__driver.find_element_by_css_selector('.se-shopping-html-toolbar-button.se-document-toolbar-custom-button.se-text-icon-toolbar-button').send_keys(Keys.ENTER)
         time.sleep(10)
         self.__driver.find_element_by_css_selector('#textarea').click()
-        self.__driver.find_element_by_css_selector('#textarea').send_keys('<br>' + str(infoTag).replace('\t', "") + '<br>')
+        self.__driver.find_element_by_css_selector('#textarea').send_keys(str(infoTag).replace('\t', "") + '<br>')
         self.__driver.find_element_by_css_selector('.seller-btn-area button').send_keys(Keys.ENTER)
         time.sleep(5)

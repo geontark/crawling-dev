@@ -1,0 +1,448 @@
+    <style>
+            .range-revamp-modal__content {
+                overflow: auto;
+                padding: 1.875rem 1.25rem 2.5rem;
+                height: 100%;
+            }
+            .range-revamp-slide-fullscreen .range-revamp-modal__content {
+                padding: 0;
+            }
+            .range-revamp-modal__content-heading {
+                margin-bottom: 0.625rem;
+            }
+
+            .range-revamp-product-details {
+                font-size: 0.875rem;
+                color: #484848;
+            }
+            .range-revamp-product-details .range-revamp-product-identifier,
+            .range-revamp-product-details .range-revamp-product-identifier__number {
+                margin: 0;
+            }
+            .range-revamp-product-details__title {
+                color: #111;
+                font-size: 1.125rem;
+                line-height: 1.44444;
+                font-weight: 700;
+            }
+            @media (min-width:37.5em) {
+                .range-revamp-product-details__title {
+                    font-size: 1.375rem;
+                    line-height: 1.45455;
+                }
+            }
+            .range-revamp-product-details__container {
+                margin: 1.2rem 0;
+            }
+            .range-revamp-product-details__container:first-child {
+                margin-top: 0;
+            }
+            .range-revamp-product-details__container:last-child {
+                margin-bottom: 0;
+            }
+            .range-revamp-product-details__header,
+            .range-revamp-product-details__package-count {
+                display: block;
+                font-weight: 700;
+                margin: 0;
+            }
+            .range-revamp-accordion {
+                list-style: none;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                background: transparent;
+            }
+            .range-revamp-accordion-item__group+.range-revamp-accordion-item__group {
+                margin-top: 2rem;
+            }
+            .range-revamp-accordion-item__indent {
+                margin-left: 2rem;
+            }
+            .range-revamp-accordion__item {
+                -webkit-transition: all 0.3s ease;
+                -o-transition: all 0.3s ease;
+                transition: all 0.3s ease;
+                margin: 0;
+                outline: 0;
+                padding: 0;
+            }
+            .range-revamp-accordion__item--active {
+                overflow: visible;
+            }
+            .range-revamp-accordion__item--active > .range-revamp-accordion__content {
+                padding-top: 1.25rem;
+                padding-bottom: 3.75rem;
+                height: auto;
+                visibility: visible;
+                opacity: 1;
+                -webkit-transition: all 0.3s ease;
+                -o-transition: all 0.3s ease;
+                transition: all 0.3s ease;
+            }
+            [dir=rtl] .range-revamp-accordion__item--active .range-revamp-chunky-header__icon {
+                -webkit-transform: scaleX(-1) rotate(180deg);
+                -ms-transform: scaleX(-1) rotate(180deg);
+                transform: scaleX(-1) rotate(180deg);
+            }
+            .range-revamp-accordion__item:first-child .range-revamp-chunky-header {
+                border-top: none;
+            }
+            .range-revamp-chunky-header {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                background: none;
+                overflow: hidden;
+                border: 0;
+                cursor: pointer;
+                -webkit-box-orient: horizontal;
+                -webkit-box-direction: normal;
+                -ms-flex-direction: row;
+                flex-direction: row;
+                padding: 1.25rem 0;
+                width: 100%;
+                -webkit-box-pack: justify;
+                -ms-flex-pack: justify;
+                justify-content: space-between;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                min-height: 5.625rem;
+                color: #484848;
+                text-decoration: none;
+            }
+            .range-revamp-chunky-header.focus-visible:focus,
+            .range-revamp-chunky-header:active,
+            .range-revamp-chunky-header:hover {
+                color: #111;
+            }
+            .range-revamp-chunky-header.focus-visible:focus .range-revamp-chunky-header__title,
+            .range-revamp-chunky-header:active .range-revamp-chunky-header__title,
+            .range-revamp-chunky-header:hover .range-revamp-chunky-header__title {
+                text-decoration: underline;
+            }
+            @media screen and (-ms-high-contrast:active),screen and (-ms-high-contrast:none) {
+                .range-revamp-chunky-header:after {
+                    content: "";
+                    min-height: 3.125rem;
+                }
+            }
+            .range-revamp-chunky-header__icon {
+                -ms-flex-negative: 0;
+                flex-shrink: 0;
+            }
+            .range-revamp-chunky-header--small {
+                padding: 0.3125rem 0;
+                min-height: 3.75rem;
+            }
+            @media screen and (-ms-high-contrast:active),screen and (-ms-high-contrast:none) {
+                .range-revamp-chunky-header--small:after {
+                    content: "";
+                    min-height: 3.125rem;
+                }
+            }
+            .range-revamp-chunky-header:disabled {
+                cursor: default;
+            }
+            .range-revamp-chunky-header:disabled .range-revamp-chunky-header__title {
+                text-decoration: none;
+            }
+            .range-revamp-chunky-header:disabled .range-revamp-chunky-header__icon,
+            .range-revamp-chunky-header:disabled .range-revamp-chunky-header__subtitle,
+            .range-revamp-chunky-header:disabled .range-revamp-chunky-header__title {
+                color: #dfdfdf;
+            }
+            .js-focus-visible .range-revamp-chunky-header:focus.focus-visible,
+            .js-focus-visible .range-revamp-expander__btn:focus.focus-visible,
+            .js-focus-visible .range-revamp-link:focus.focus-visible,
+            .js-focus-visible .range-revamp-radio input[type=radio]:focus.focus-visible:hover~.range-revamp-radio__symbol,
+            .js-focus-visible .range-revamp-radio input[type=radio]:focus.focus-visible~.range-revamp-radio__symbol,
+            .js-focus-visible .range-revamp-shoppable-image__category-link:focus.focus-visible,
+            .js-focus-visible .range-revamp-shoppable-image__dot:focus.focus-visible,
+            .js-focus-visible .range-revamp-slider-handle:focus.focus-visible,
+            .js-focus-visible .range-revamp-tabs__panel:focus.focus-visible,
+            .js-focus-visible .range-revamp-toggle-button:focus.focus-visible {
+                -webkit-box-shadow: 0 0 0 2px #fff,0 0 0 3px #111;
+                box-shadow: 0 0 0 2px #fff,0 0 0 3px #111;
+                outline: none;
+                -webkit-transition-property: -webkit-box-shadow;
+                transition-property: -webkit-box-shadow;
+                -o-transition-property: box-shadow;
+                transition-property: box-shadow;
+                transition-property: box-shadow,-webkit-box-shadow;
+                -webkit-transition-duration: 0.2s;
+                -o-transition-duration: 0.2s;
+                transition-duration: 0.2s;
+                -webkit-transition-timing-function: ease-out;
+                -o-transition-timing-function: ease-out;
+                transition-timing-function: ease-out;
+            }
+            .range-revamp-accordion__item:first-child .range-revamp-chunky-header {
+                border-top: none;
+            }
+            .range-revamp-chunky-header__title-wrapper {
+                text-align: left;
+                -webkit-box-flex: 1;
+                -ms-flex-positive: 1;
+                flex-grow: 1;
+            }
+            .range-revamp-chunky-header__title-wrapper .range-revamp-chunky-header__title {
+                width: auto;
+            }
+            [dir=rtl] .range-revamp-chunky-header__title-wrapper {
+                text-align: right;
+            }
+            .range-revamp-chunky-header.focus-visible:focus .range-revamp-chunky-header__title,
+            .range-revamp-chunky-header:active .range-revamp-chunky-header__title,
+            .range-revamp-chunky-header:hover .range-revamp-chunky-header__title {
+                text-decoration: underline;
+            }
+            .range-revamp-chunky-header__title-wrapper {
+                text-align: left;
+                -webkit-box-flex: 1;
+                -ms-flex-positive: 1;
+                flex-grow: 1;
+            }
+            .range-revamp-chunky-header__title-wrapper .range-revamp-chunky-header__title {
+                width: auto;
+            }
+            .range-revamp-chunky-header__title {
+                color: #111;
+                font-size: 1.4rem;
+                line-height: 1.57143;
+                font-weight: 700;
+                display: block;
+            }
+            .range-revamp-chunky-header:disabled .range-revamp-chunky-header__title {
+                text-decoration: none;
+            }
+            .range-revamp-chunky-header:disabled .range-revamp-chunky-header__icon,
+            .range-revamp-chunky-header:disabled .range-revamp-chunky-header__subtitle,
+            .range-revamp-chunky-header:disabled .range-revamp-chunky-header__title {
+                color: #dfdfdf;
+            }
+            [dir=rtl] .range-revamp-chunky-header__title-wrapper {
+                text-align: right;
+            }
+            .range-revamp-btn .range-revamp-svg-icon {
+                -ms-flex-negative: 0;
+                flex-shrink: 0;
+                display: inline-block;
+                height: 1.5rem;
+                width: 1.5rem;
+                vertical-align: middle;
+                fill: currentColor;
+                -webkit-transition-property: fill,-webkit-transform;
+                transition-property: fill,-webkit-transform;
+                -o-transition-property: transform,fill;
+                transition-property: transform,fill;
+                transition-property: transform,fill,-webkit-transform;
+                -webkit-transition-duration: 0.3s;
+                -o-transition-duration: 0.3s;
+                transition-duration: 0.3s;
+                -webkit-transition-timing-function: ease;
+                -o-transition-timing-function: ease;
+                transition-timing-function: ease;
+            }
+            .range-revamp-btn--icon .range-revamp-svg-icon {
+                -ms-flex-negative: 0;
+                flex-shrink: 0;
+                display: inline-block;
+                height: 1.5rem;
+                width: 1.5rem;
+                vertical-align: middle;
+                fill: currentColor;
+                -webkit-transition-property: fill,-webkit-transform;
+                transition-property: fill,-webkit-transform;
+                -o-transition-property: transform,fill;
+                transition-property: transform,fill;
+                transition-property: transform,fill,-webkit-transform;
+                -webkit-transition-duration: 0.3s;
+                -o-transition-duration: 0.3s;
+                transition-duration: 0.3s;
+                -webkit-transition-timing-function: ease;
+                -o-transition-timing-function: ease;
+                transition-timing-function: ease;
+            }
+            .range-revamp-btn--loading .range-revamp-btn__copy .range-revamp-svg-icon {
+                display: none;
+            }
+            .range-revamp-btn--icon-only .range-revamp-btn__copy .range-revamp-svg-icon {
+                margin: 0;
+            }
+            .range-revamp-btn--icon-only-mobile .range-revamp-btn__copy .range-revamp-svg-icon {
+                margin: 0;
+            }
+            @media (min-width:37.5em) {
+                .range-revamp-btn--icon-only-mobile {
+                    padding: 0 2.5rem;
+                }
+                .range-revamp-btn--icon-only-mobile.range-revamp-btn--small {
+                    padding: 0 1.25rem;
+                }
+                .range-revamp-btn--icon-only-mobile .range-revamp-btn__label {
+                    display: inline-block;
+                    text-indent: 0;
+                    width: auto;
+                    height: auto;
+                    overflow: initial;
+                }
+                .range-revamp-btn--icon-only-mobile.range-revamp-leading-icon .range-revamp-svg-icon {
+                    margin-right: 0.625rem;
+                }
+                .range-revamp-btn--icon-only-mobile.range-revamp-trailing-icon .range-revamp-svg-icon {
+                    margin-left: 0.625rem;
+                }
+            }
+            [dir=rtl] .range-revamp-btn--icon-only-mobile .range-revamp-svg-icon {
+                margin: 0;
+            }
+            @media (min-width:37.5em) {
+                [dir=rtl] .range-revamp-btn--icon-only-mobile.range-revamp-leading-icon .range-revamp-svg-icon {
+                    margin-left: 0.625rem;
+                }
+                [dir=rtl] .range-revamp-btn--icon-only-mobile.range-revamp-trailing-icon .range-revamp-svg-icon {
+                    margin-right: 0.625rem;
+                }
+            }
+            .range-revamp-leading-icon .range-revamp-svg-icon {
+                margin-right: 0.625rem;
+                vertical-align: top;
+            }
+            .range-revamp-leading-icon .range-revamp-svg-icon--100 {
+                margin-right: 0.3125rem;
+            }
+            .range-revamp-trailing-icon .range-revamp-svg-icon {
+                margin-left: 0.625rem;
+                vertical-align: top;
+            }
+            .range-revamp-trailing-icon .range-revamp-svg-icon--100 {
+                margin-left: 0.3125rem;
+            }
+            .range-revamp-svg-icon {
+                display: inline-block;
+                height: 1.5rem;
+                width: 1.5rem;
+                vertical-align: middle;
+                fill: currentColor;
+                -webkit-transition-property: fill,-webkit-transform;
+                transition-property: fill,-webkit-transform;
+                -o-transition-property: transform,fill;
+                transition-property: transform,fill;
+                transition-property: transform,fill,-webkit-transform;
+                -webkit-transition-duration: 0.3s;
+                -o-transition-duration: 0.3s;
+                transition-duration: 0.3s;
+                -webkit-transition-timing-function: ease;
+                -o-transition-timing-function: ease;
+                transition-timing-function: ease;
+            }
+            .range-revamp-svg-icon--100 {
+                width: 1rem;
+                height: 1rem;
+            }
+            .range-revamp-svg-icon--150 {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+            .range-revamp-svg-icon--200 {
+                width: 2rem;
+                height: 2rem;
+            }
+            .range-revamp-svg-icon--250 {
+                width: 2.5rem;
+                height: 2.5rem;
+            }
+            .range-revamp-svg-icon--300 {
+                width: 3rem;
+                height: 3rem;
+            }
+            .range-revamp-svg-icon--rotate {
+                -webkit-animation: range-revamp-icon-rotate 1.5s linear infinite;
+                animation: range-revamp-icon-rotate 1.5s linear infinite;
+            }
+            .range-revamp-svg-icon--rotate-45 {
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+            }
+            .range-revamp-svg-icon--rotate-minus-45 {
+                -webkit-transform: rotate(-45deg);
+                -ms-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+            }
+            .range-revamp-svg-icon--rotate-135 {
+                -webkit-transform: rotate(135deg);
+                -ms-transform: rotate(135deg);
+                transform: rotate(135deg);
+            }
+            .range-revamp-svg-icon--rotate-minus-135 {
+                -webkit-transform: rotate(-135deg);
+                -ms-transform: rotate(-135deg);
+                transform: rotate(-135deg);
+            }
+            .range-revamp-svg-icon--rotate-180 {
+                -webkit-transform: rotate(180deg);
+                -ms-transform: rotate(180deg);
+                transform: rotate(180deg);
+            }
+            .range-revamp-svg-icon--rotate-minus-180 {
+                -webkit-transform: rotate(-180deg);
+                -ms-transform: rotate(-180deg);
+                transform: rotate(-180deg);
+            }
+            .range-revamp-svg-icon--white {
+                fill: #fff;
+            }
+            .range-revamp-svg-icon--black {
+                fill: #111;
+            }
+            .range-revamp-svg-icon--grey {
+                fill: #484848;
+            }
+            .range-revamp-svg-icon [class*=white],
+            .range-revamp-svg-icon g[class*=white],
+            .range-revamp-svg-icon path[class*=white] {
+                fill: #fff;
+            }
+            .range-revamp-svg-icon {
+                display: none;
+            }
+            [dir=rtl] .range-revamp-leading-icon .range-revamp-svg-icon {
+                margin-left: 0.625rem;
+                margin-right: 0;
+            }
+            [dir=rtl] .range-revamp-leading-icon .range-revamp-svg-icon--100 {
+                margin-left: 0.3125rem;
+                margin-right: 0;
+            }
+            [dir=rtl] .range-revamp-trailing-icon .range-revamp-svg-icon {
+                margin-right: 0.625rem;
+                margin-left: 0;
+            }
+            [dir=rtl] .range-revamp-trailing-icon .range-revamp-svg-icon--100 {
+                margin-right: 0.3125rem;
+                margin-left: 0;
+            }
+            [dir=rtl] .range-revamp-accordion__item--active .range-revamp-chunky-header__icon {
+                -webkit-transform: scaleX(-1) rotate(180deg);
+                -ms-transform: scaleX(-1) rotate(180deg);
+                transform: scaleX(-1) rotate(180deg);
+            }
+            .range-revamp-chunky-header__icon {
+                -ms-flex-negative: 0;
+                flex-shrink: 0;
+            }
+            .range-revamp-chunky-header:disabled .range-revamp-chunky-header__icon,
+            .range-revamp-chunky-header:disabled .range-revamp-chunky-header__subtitle,
+            .range-revamp-chunky-header:disabled .range-revamp-chunky-header__title {
+                color: #dfdfdf;
+            }
+            [dir=rtl] .range-revamp-chunky-header__icon {
+                -webkit-transform: scaleX(-1);
+                -ms-transform: scaleX(-1);
+                transform: scaleX(-1);
+            }
+    </style>
+    
