@@ -7,7 +7,7 @@ def excute():
     webDriverPath = '/Users/tak/tak/python/crawling-dev/chromedriver'
     driver = Utills.getChromeDriver(webDriverPath)
 
-    costcoPath = 'https://www.costco.co.kr/Food/Processed-Food/Oils/KS-Spanish-Extra-Virgin-Olive-Oil-3L/p/1310209'
+    costcoPath = 'https://www.costco.co.kr/SportsFitnessCamping/Outdoor-Sports/Wilson-Soccer-Kit/p/626516'
     # 코스트코 정보 크롤링
     costcoItem = CostcoItem(driver, costcoPath).excute()
     costcoItem.quit()
@@ -18,6 +18,7 @@ def excute():
     store.itemId = costcoItem.itemId
     store.priceMarginRate = 1.08    # 8% 마진
     store.itemTitle = costcoItem.itemTitle
+    store.deliveryPrice = 3000  # 배송료 3000
     store.itemPrice = costcoItem.itemPrice
     store.itemImgs = costcoItem.itemImgs
     store.itemDetailInfo = costcoItem.itemDetailInfo

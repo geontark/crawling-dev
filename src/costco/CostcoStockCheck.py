@@ -2,10 +2,14 @@ import os
 import time
 import pandas as pd
 from datetime import datetime
+
+from selenium.common.exceptions import NoSuchElementException
+
 from src.costco.CostcoItem import CostcoItem
 from src.telegram.MyTelegram import MyTelegram as myTelegram
 from src.utills import Utills
 
+# 코스트코 물거의 재고와 가격변동을 체크 하기위한 클래스
 class CostcoStockCheck:
     __csvPath = './costco_items/state/'
     __itemUrlFile = 'itemUrls.csv'
@@ -32,10 +36,10 @@ class CostcoStockCheck:
 
         changePriceItems = []
         changeStockItems = []
+        deleteItems = []  # 삭제된 상품에대한 정보를 담고있
         for i in range(urlLen):  # 반복문을 돌면서 각각 url에 접근하여 정보를 갱신한다.
             itemUrl = urlCsv['itemUrl'].iloc[i]
 
-            deleteItems = [] # 삭제된 상품에대한 정보를 담고있
             self.__driver.get(itemUrl)
             time.sleep(5)
             #  현재 url이 삭제됨(더이상 상품 판매를 하지 않음을 의미하는 url)
@@ -49,6 +53,22 @@ class CostcoStockCheck:
                     deleteItemInfo.itemTitle = itemInfo['itemTitle']
                     deleteItems.append(deleteItemInfo)
                 continue
+
+            try: # 상품 페이지 없어짐
+                self.__driver.find_element_by_xpath('//*[@id="globalMessages"]/div[2]/div/div')
+                deleteItemInfo = CostcoItem()
+                deleteItemInfo.itemUrl = itemUrl
+                if itemUrl in stockUrlMap:
+                    itemIndex = stockUrlMap[itemUrl]
+                    itemInfo = stockCsv.iloc[itemIndex]
+                    deleteItemInfo.itemId = itemInfo['itemId']
+                    deleteItemInfo.itemTitle = itemInfo['itemTitle']
+
+                deleteItems.append(deleteItemInfo)
+                continue
+            except NoSuchElementException:
+                print('page not error')
+
 
             # url 변경됐는지 체크(redirect)
             # if

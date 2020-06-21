@@ -85,12 +85,19 @@ class IkeaItem:
 
     def searchItemTitle(self):
         self.__itemTitle = self.__driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div/div[2]/div[3]/div/div[1]/div/div[1]/h1/div[1]').text
-        subTitle = self.__driver.find_element_by_xpath(
-            '//*[@id="content"]/div/div[1]/div/div[2]/div[3]/div/div[1]/div/div[1]/h1/div[2]/span[1]').text
-        itemMesure = self.__driver.find_element_by_xpath(
-            '//*[@id="content"]/div/div[1]/div/div[2]/div[3]/div/div[1]/div/div[1]/h1/div[2]/span[2]').text
-        self.__itemTitle += ' ' + subTitle
-        self.__itemTitle += ' ' + itemMesure
+        try:
+            subTitle = self.__driver.find_element_by_xpath(
+                '//*[@id="content"]/div/div[1]/div/div[2]/div[3]/div/div[1]/div/div[1]/h1/div[2]/span[1]').text
+            self.__itemTitle += ' ' + subTitle
+        except NoSuchElementException:
+            print('subTitle NoSuch')
+
+        try:
+            itemMesure = self.__driver.find_element_by_xpath(
+                '//*[@id="content"]/div/div[1]/div/div[2]/div[3]/div/div[1]/div/div[1]/h1/div[2]/span[2]').text
+            self.__itemTitle += ' ' + itemMesure
+        except NoSuchElementException:
+            print('itemMesure NoSuch')
 
     def searchItemPrice(self):
         try:  # 할인 하는지 체크

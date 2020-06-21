@@ -96,7 +96,11 @@ class CostcoItem:
         return self
 
     def searchItemId(self):
-        self.__itemId = self.__driver.find_element_by_xpath('//*[@id="globalMessages"]/div[3]/div[3]/p/span').text
+        try:
+            self.__itemId = self.__driver.find_element_by_xpath('//*[@id="globalMessages"]/div[3]/div[3]/p/span').text
+        except NoSuchElementException:
+            time.sleep(2)
+            self.__itemId = self.__driver.find_element_by_xpath('//*[@id="globalMessages"]/div[3]/div[3]/p/span').text
 
     def searchItemTitle(self):
         self.__itemTitle = self.__driver.find_element_by_xpath('// *[ @ id = "globalMessages"]/div[3]/div[3]/h1').text

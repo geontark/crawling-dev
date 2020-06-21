@@ -7,7 +7,7 @@ def excute():
     webDriverPath = '/Users/tak/tak/python/crawling-dev/chromedriver'
     driver = Utills.getChromeDriver(webDriverPath)
 
-    ikeaPath = 'https://www.ikea.com/kr/ko/p/raskog-trolley-grey-green-90443140/'
+    ikeaPath = 'https://www.ikea.com/kr/ko/p/garoe-hammock-stand-outdoor-grey-70233869/'
     # 이케아 정보 크롤링
     ikeaItem = IkeaItem(driver, ikeaPath).excute()
     ikeaItem.quit()

@@ -159,12 +159,21 @@ class SmartStoreItemRegister:
             Utills.movingTop(self.__driver.find_element_by_xpath(
                 '//*[@id="productForm"]/ng-include/ui-view[16]/div[1]/div[2]/div/div[7]/div[1]/div/div/div/div/div')).click()
             time.sleep(1)
-            # 유료 드랍박스 설정
+            # 갯수당 유료 드랍박스 설정
             Utills.movingTop(self.__driver.find_element_by_xpath(
-                '//*[@id="productForm"]/ng-include/ui-view[16]/div[1]/div[2]/div/div[7]/div[1]/div/div/div/div/div/div[2]/div/div[3]')).click()
+                '//*[@id="productForm"]/ng-include/ui-view[16]/div[1]/div[2]/div/div[7]/div[1]/div/div/div/div/div/div[2]/div/div[4]')).click()
+
             # 배송료 입력
             self.__driver.find_element_by_xpath(
+                '//*[@id="basic_price"]').clear()
+            self.__driver.find_element_by_xpath(
                 '//*[@id="basic_price"]').send_keys(int(self.__deliveryPrice))
+
+            # 수량 입력
+            self.__driver.find_element_by_xpath(
+                '//*[@id="delivery_condition2"]').clear()
+            self.__driver.find_element_by_xpath(
+                '//*[@id="delivery_condition2"]').send_keys(1)
 
     #     마진 퍼센트를 붙인 가격을 계산하
     def calMarginPrice(self):
@@ -180,7 +189,7 @@ class SmartStoreItemRegister:
             self.itemTitle)
         self.__driver.find_element_by_css_selector(
             '.input-content .form-section-sub .form-group input[name="product.salePrice"]').send_keys(
-            self.calMarginPrice())
+            int(self.calMarginPrice()) - int(self.__deliveryPrice))
         self.__driver.find_element_by_css_selector(
             '.input-content .form-section-sub .form-group input[name="product.stockQuantity"]').send_keys(
             self.itemAvailableStock)
