@@ -7,7 +7,7 @@ def excute():
     webDriverPath = '/Users/tak/tak/python/crawling-dev/chromedriver'
     driver = Utills.getChromeDriver(webDriverPath)
 
-    costcoPath = 'https://www.costco.co.kr/SportsFitnessCamping/Outdoor-Sports/Wilson-Soccer-Kit/p/626516'
+    costcoPath = 'https://www.costco.co.kr/BeautyHouseholdPersonal-Care/BathFacial-Tissue/BathFacial-Tissue/KS-Premium-Bath-Tissue-40m-x-30roll-x-2/p/601285'
     # 코스트코 정보 크롤링
     costcoItem = CostcoItem(driver, costcoPath).excute()
     costcoItem.quit()
